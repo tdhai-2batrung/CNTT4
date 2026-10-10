@@ -1,14 +1,28 @@
 import joblib
 import pandas as pd
 import streamlit as st
+from pathlib import Path
+import os
+st.set_page_config(page_title='Sàng lọc nguy cơ tiểu đường', page_icon='🩺')
+st.title('Sàng lọc nguy cơ tiểu đường')
+st.caption('Công cụ nghiên cứu hỗ trợ sàng lọc, không thay thế chẩn đoán y khoa.')
 
 st.set_page_config(page_title='Sàng lọc nguy cơ tiểu đường', page_icon='🩺')
 st.title('Sàng lọc nguy cơ tiểu đường')
 st.caption('Công cụ nghiên cứu hỗ trợ sàng lọc, không thay thế chẩn đoán y khoa.')
 
+
+st.write("Thư mục làm việc:", os.getcwd())
+
+APP_DIR = Path(__file__).resolve().parent
+MODEL_PATH = APP_DIR / "diabetes_model.joblib"
+
+st.write("Đường dẫn mô hình:", str(MODEL_PATH))
+st.write("File tồn tại:", MODEL_PATH.is_file())
+
 @st.cache_resource
 def load_model():
-    return joblib.load('diabetes_model.joblib')
+    return joblib.load(MODEL_PATH)
 
 model = load_model()
 
